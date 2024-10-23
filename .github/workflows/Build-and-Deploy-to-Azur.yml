@@ -45,7 +45,7 @@ jobs:
 
     permissions:
       actions: read
-      content: read
+      contents: read
       id-token: write
 
     environment: Production
@@ -65,13 +65,16 @@ jobs:
             
       - name: Setup kubelogin
         uses: Azure/use-kubelogin@v1
- 
-      - name: Kubernetes Set Context
-        uses: Azure/k8s-set-context@v3.0
+        with:
+          kubelogin-version: 'v0.0.25'
+          
+      - name: Get K8s Context
+        uses: Azure/aks-set-context@v3
         with:
           resource-group: ${{env.RESOURCE_GROUP}}
           cluster-name: ${{env.CLUSTER_NAME}}
-          admin: False
+          admin: 'false'
+          use-kubelogin: 'true'
          
       - name: envsubst-action
         uses: danielr1996/envsubst-action@1.1.0
@@ -80,18 +83,14 @@ jobs:
           AZURE_CONTAINER_REGISTRY: ${{ secret.AZURE_CONTAINER_REGISTRY}}
           CONTAINER_NAME: ${{ secret.CONTAINER_NAME}}
         with:
-              # File to run substitutions on
           input: 
             kubernetes/hello-world-deployment.yaml
-
-              # File to write result to
           output: 
             hello-world-deployment.yaml
-
-             
-        - name: Deploy to Kubernetes cluster
-          uses: Azure/k8s-deploy@v4.9
-          with:
+  
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v4.9
+        with:
             action: deploy
             manifests: |
               hello-world-deployment.yaml
