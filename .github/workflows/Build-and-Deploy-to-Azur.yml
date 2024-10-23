@@ -12,7 +12,7 @@ on:
     branches: ['master']
   workflow_dispatch:
 
-permission:
+permissions:
   contents: read
   
 jobs:
@@ -79,9 +79,9 @@ jobs:
       - name: envsubst-action
         uses: danielr1996/envsubst-action@1.1.0
         env:
-          MONGODB_URI: ${{ secret.MONGODB_URI}}
-          AZURE_CONTAINER_REGISTRY: ${{ secret.AZURE_CONTAINER_REGISTRY}}
-          CONTAINER_NAME: ${{ secret.CONTAINER_NAME}}
+          MONGODB_URI: ${{ secrets.MONGODB_URI}}
+          AZURE_CONTAINER_REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY}}
+          CONTAINER_NAME: ${{ secrets.CONTAINER_NAME}}
         with:
           input: 
             kubernetes/hello-world-deployment.yaml
@@ -95,7 +95,7 @@ jobs:
             manifests: |
               hello-world-deployment.yaml
               kubernetes/hello-world-service.yaml
-            images: ${{ secret.AZURE_CONTAINER_REGISTRY}}/${{ secret.CONTAINER_NAME}}:${{github.sha}}
+            images: ${{ secrets.AZURE_CONTAINER_REGISTRY}}/${{ secrets.CONTAINER_NAME}}:${{github.sha}}
 
 
           
