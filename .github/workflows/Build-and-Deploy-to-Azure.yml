@@ -98,4 +98,4 @@ jobs:
           manifests: |
             hello-world-deployment.yaml
             kubernetes/hello-world-service.yaml
-          images: ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+          images: ${{ env.AZURE_CONTAINER_REGISTRY }}/${{ env.CONTAINER_NAME }}:${{ github.sha}}
