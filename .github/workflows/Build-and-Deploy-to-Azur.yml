@@ -29,7 +29,7 @@ jobs:
        with:
          login-server: ${{ env.AZURE_CONTAINER_REGISTRY_LOGIN_SERVER }}
          username: ${{ env.AZURE_CONTAINER_REGISTRY_USERNAME }}
-         password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PW_1 }}
+         password: 5Wp+4UqSH6vTB56V8oXf/G5Muyq1h7ZG0Or329kRkc+ACRBZ7kK4
          
       -name: Build and Push Docker Images
        uses: docker/build-push-action@v6.9.0
